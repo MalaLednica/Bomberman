@@ -8,7 +8,6 @@ import sk.uniza.fri.mapa.ObjektNaMape;
 import sk.uniza.fri.mapa.nehybneObjekty.ManazerStien;
 
 
-
 public abstract class Postava extends ObjektNaMape {
 
 
@@ -19,15 +18,14 @@ public abstract class Postava extends ObjektNaMape {
         this.rychlost = rychlost;
 
 
-
     }
 
     public boolean pohniSa(Smer smer) {
 
-            this.setX(this.getX() + smer.getX() * this.rychlost);
-            this.setY(this.getY() + smer.getY() * this.rychlost);
+        this.setX(this.getX() + smer.getX() * this.rychlost);
+        this.setY(this.getY() + smer.getY() * this.rychlost);
 
-            return true;
+        return true;
 
     }
 
@@ -43,9 +41,6 @@ public abstract class Postava extends ObjektNaMape {
         return false;
 
     }
-
-
-
 
 
 }

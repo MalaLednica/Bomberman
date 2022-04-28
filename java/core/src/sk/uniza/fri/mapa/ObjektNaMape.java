@@ -11,7 +11,6 @@ public abstract class ObjektNaMape {
     public static final int STRANA_STVORCA = 64;
 
 
-
     private final SpriteBatch batch;
     private Sprite sprite;
 
@@ -26,7 +25,7 @@ public abstract class ObjektNaMape {
     }
 
     public float getX() {
-        return (int) sprite.getX();
+        return (int)this.sprite.getX();
     }
 
     public void setX(float x) {
@@ -35,7 +34,7 @@ public abstract class ObjektNaMape {
     }
 
     public float getY() {
-        return (int) this.sprite.getY();
+        return (int)this.sprite.getY();
     }
 
     public void setY(float y) {
@@ -57,6 +56,7 @@ public abstract class ObjektNaMape {
 
     public void dispose() {
         this.sprite.getTexture().dispose();
+
     }
 
 

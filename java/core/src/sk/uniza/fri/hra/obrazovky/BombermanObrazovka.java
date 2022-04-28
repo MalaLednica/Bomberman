@@ -14,13 +14,18 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import sk.uniza.fri.Smer;
 import sk.uniza.fri.hra.BombermanHra;
 import sk.uniza.fri.hra.Hrac;
+import sk.uniza.fri.mapa.Mapa;
 import sk.uniza.fri.mapa.nehybneObjekty.ManazerStien;
+import sk.uniza.fri.mapa.ziveObjekty.ManazerNepriatelov;
+import sk.uniza.fri.mapa.ziveObjekty.Nepriatel;
+
+import java.util.Random;
 
 public class BombermanObrazovka extends ScreenAdapter {
 
 
     public static final int SIRKA_PLOCHY = 1600;
-    public static final int VYSKA_PLOCHY = 900;
+    public static final int VYSKA_PLOCHY = 960;
 
 
     private final BombermanHra bombermanHra;
@@ -29,8 +34,9 @@ public class BombermanObrazovka extends ScreenAdapter {
     private final Camera kamera;
     private final Viewport viewport;
 
-    private ManazerStien manazerStien;
+
     private Hrac hrac;
+    private Mapa mapa;
 
 
     public BombermanObrazovka(BombermanHra bombermanHra) {
@@ -42,10 +48,16 @@ public class BombermanObrazovka extends ScreenAdapter {
         this.kamera = new OrthographicCamera();
         this.viewport = new FitViewport(SIRKA_PLOCHY, VYSKA_PLOCHY, this.kamera);
 
-        this.hrac = new Hrac(this.batch);
-        this.manazerStien = new ManazerStien(this.batch, 25, 14);
-        this.manazerStien.vytvorOkraje();
-        this.manazerStien.vykresliNahodne(30);
+
+
+        this.mapa = new Mapa(this.batch, SIRKA_PLOCHY/64, VYSKA_PLOCHY/64);
+        this.mapa.vytvor();
+        this.hrac = new Hrac(this.batch, this.mapa);
+
+
+
+
+
     }
 
 
@@ -55,23 +67,38 @@ public class BombermanObrazovka extends ScreenAdapter {
 
 
         if (Gdx.input.isKeyPressed(Input.Keys.UP)) {
-            this.hrac.pohyb(Smer.HORE, this.manazerStien);
-
-        } if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
-            this.hrac.pohyb(Smer.DOLE, this.manazerStien);
-
-        } if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-            this.hrac.pohyb(Smer.DOLAVA, this.manazerStien);
-
-        }  if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-            this.hrac.pohyb(Smer.DOPRAVA, this.manazerStien);
+            this.hrac.pohyb(Smer.HORE);
 
         }
+        if (Gdx.input.isKeyPressed(Input.Keys.DOWN)) {
+            this.hrac.pohyb(Smer.DOLE);
+
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+            this.hrac.pohyb(Smer.DOLAVA);
+
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+            this.hrac.pohyb(Smer.DOPRAVA);
+
+        }
+        //TODO trieda bomba
+
+        //TODO polozenie bomby
+        //TODO vybuch bomby
+        //TODO nicenie stien
+        //TODO zabijanie nepriatelov a hraca
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            this.hrac.polozBombu();
+        }
+
+
         this.hrac.vykresli();
 
+        this.mapa.hracZobralUpgrade(this.hrac);
+        this.mapa.hracZraneny(this.hrac);
+        this.mapa.vykresli();
 
-
-        this.manazerStien.vykresliVsetko();
 
 
     }

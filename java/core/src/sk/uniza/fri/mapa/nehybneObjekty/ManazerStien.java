@@ -53,7 +53,7 @@ public class ManazerStien {
         for (int i = 0; i < this.steny.length; i++) {
             for (int j = 0; j < this.steny[0].length; j++) {
                 if (i == 0 || i == this.steny.length - 1 || j == 0 || j == this.steny[0].length - 1) {
-                    this.steny[i][j] = new Stena(i, j, this.batch);
+                    this.steny[i][j] = new Stena(i, j, this.batch, TypSteny.OHRANICENIE);
                 }
             }
         }
@@ -61,12 +61,29 @@ public class ManazerStien {
 
     }
 
-    public void vykresliNahodne(int kolko) {
+    public void vytvorStredoveSteny() {
+        for (int i = 2; i < this.steny.length-2; i++) {
+            for (int j = 2; j < this.steny[0].length-2; j++) {
+                if (i % 2 == 0 && j % 2 == 0) {
+                    this.steny[i][j] = new Stena(i, j, this.batch, TypSteny.NEZNICITELNA);
+                }
+            }
+        }
+    }
+
+
+    // TODO vymyslieť lepšie generovanie
+    public void pridajNahodne(int kolko) {
         Random rnd = new Random();
         for (int i = 0; i < kolko; i++) {
-            int a = rnd.nextInt(this.steny.length - 1);
-            int b = rnd.nextInt(this.steny[0].length - 1);
-            this.steny[a][b] = new Stena(a, b, this.batch);
+            int a = rnd.nextInt(this.steny.length - 2) + 1;
+            int b = rnd.nextInt(this.steny[0].length - 2 ) + 1;
+            while(a % 2 == 0 && b % 2 == 0) {
+                a = rnd.nextInt(this.steny.length - 2) + 1;
+                b = rnd.nextInt(this.steny[0].length - 2 ) + 1;
+            }
+
+            this.steny[a][b] = new Stena(a, b, this.batch, TypSteny.OBYCAJNA);
         }
 
 

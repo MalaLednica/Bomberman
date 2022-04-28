@@ -2,15 +2,15 @@ package sk.uniza.fri.mapa.nehybneObjekty.upgrades;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import sk.uniza.fri.hra.Hrac;
-import sk.uniza.fri.mapa.ObjektNaMape;
 
-public class PocetBombUpgrade extends ObjektNaMape implements IUpgrade {
-    public PocetBombUpgrade(int x, int y, String nazovSuboru, SpriteBatch batch) {
-        super(x, y, nazovSuboru, batch);
+public class PocetBombUpgrade extends Upgrade {
+    public PocetBombUpgrade(int x, int y, SpriteBatch batch) {
+        super(x, y, "pocet.png", batch);
     }
 
-    @Override
-    public boolean zober(Hrac hrac) {
-        return false;
+
+    public void zober(Hrac hrac) {
+        hrac.pridajPocetBomb();
+
     }
 }
