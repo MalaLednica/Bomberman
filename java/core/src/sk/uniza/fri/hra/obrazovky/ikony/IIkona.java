@@ -1,8 +1,9 @@
 package sk.uniza.fri.hra.obrazovky.ikony;
 
 public interface IIkona {
-    boolean vykonaj();
+    void vykonaj();
+
+    void vykresliSa();
+
+    void skontrolujKliknutie(int x, int y);
 }
-//TODO dorobiť telo metódam vykonaj
-//TODO pridať ikony obrazovkám
-//TODO kontrola kliknutia na ikonu

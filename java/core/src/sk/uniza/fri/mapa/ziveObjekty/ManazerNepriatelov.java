@@ -3,7 +3,7 @@ package sk.uniza.fri.mapa.ziveObjekty;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import sk.uniza.fri.hra.obrazovky.BombermanObrazovka;
-import sk.uniza.fri.mapa.nehybneObjekty.ManazerStien;
+import sk.uniza.fri.mapa.nehybneObjekty.steny.ManazerStien;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -37,7 +37,7 @@ public class ManazerNepriatelov {
     }
 
     public void vykresliVsetko() {
-        for (Nepriatel nepriatel : nepriatelia) {
+        for (Nepriatel nepriatel : this.nepriatelia) {
             nepriatel.vykresliSa();
 
         }
@@ -46,7 +46,7 @@ public class ManazerNepriatelov {
 
     public void pohniVsetko(ManazerStien manazerStien) {
 
-        for (Nepriatel nepriatel : nepriatelia) {
+        for (Nepriatel nepriatel : this.nepriatelia) {
             nepriatel.hlupyPohyb2(manazerStien);
 
         }
@@ -58,7 +58,7 @@ public class ManazerNepriatelov {
         for (int i = 0; i < kolko; i++) {
             int a = rnd.nextInt((BombermanObrazovka.SIRKA_PLOCHY / 64) - 2) + 1;
             int b = rnd.nextInt((BombermanObrazovka.VYSKA_PLOCHY / 64) - 2) + 1;
-            if(a % 2 == 0 && b % 2 == 0 ) {
+            if (a % 2 == 0 && b % 2 == 0) {
                 a--;
             }
 

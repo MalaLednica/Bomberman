@@ -17,7 +17,7 @@ public class ManazerUpgradeov {
     }
 
 
-    public void pridajUpgrade(Upgrade upgrade, int x, int y) {
+    public void pridajUpgrade(Upgrade upgrade) {
         this.zoznam.add(upgrade);
 
     }

@@ -24,7 +24,7 @@ public abstract class ObjektNaMape {
 
     }
 
-    public float getX() {
+    public int getX() {
         return (int)this.sprite.getX();
     }
 
@@ -33,7 +33,7 @@ public abstract class ObjektNaMape {
         this.sprite.setX(x);
     }
 
-    public float getY() {
+    public int getY() {
         return (int)this.sprite.getY();
     }
 

@@ -2,7 +2,7 @@ package sk.uniza.fri.mapa.ziveObjekty;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import sk.uniza.fri.Smer;
-import sk.uniza.fri.mapa.nehybneObjekty.ManazerStien;
+import sk.uniza.fri.mapa.nehybneObjekty.steny.ManazerStien;
 
 import java.util.Random;
 

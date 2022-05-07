@@ -8,18 +8,19 @@ import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import sk.uniza.fri.Smer;
 import sk.uniza.fri.hra.BombermanHra;
 import sk.uniza.fri.hra.Hrac;
+import sk.uniza.fri.hra.obrazovky.ikony.IIkona;
+import sk.uniza.fri.hra.obrazovky.ikony.MenuIkona;
+import sk.uniza.fri.hra.obrazovky.ikony.ZvukIkona;
 import sk.uniza.fri.mapa.Mapa;
-import sk.uniza.fri.mapa.nehybneObjekty.ManazerStien;
-import sk.uniza.fri.mapa.ziveObjekty.ManazerNepriatelov;
-import sk.uniza.fri.mapa.ziveObjekty.Nepriatel;
 
-import java.util.Random;
+import java.util.ArrayList;
 
 public class BombermanObrazovka extends ScreenAdapter {
 
@@ -31,6 +32,7 @@ public class BombermanObrazovka extends ScreenAdapter {
     private final BombermanHra bombermanHra;
     private final SpriteBatch batch;
 
+
     private final Camera kamera;
     private final Viewport viewport;
 
@@ -38,6 +40,7 @@ public class BombermanObrazovka extends ScreenAdapter {
     private Hrac hrac;
     private Mapa mapa;
 
+    private ArrayList<IIkona> ikony;
 
     public BombermanObrazovka(BombermanHra bombermanHra) {
 
@@ -49,12 +52,13 @@ public class BombermanObrazovka extends ScreenAdapter {
         this.viewport = new FitViewport(SIRKA_PLOCHY, VYSKA_PLOCHY, this.kamera);
 
 
-
-        this.mapa = new Mapa(this.batch, SIRKA_PLOCHY/64, VYSKA_PLOCHY/64);
+        this.mapa = new Mapa(this.batch, SIRKA_PLOCHY / 64, VYSKA_PLOCHY / 64);
         this.mapa.vytvor();
         this.hrac = new Hrac(this.batch, this.mapa);
 
-
+        this.ikony = new ArrayList<>();
+        this.ikony.add(new MenuIkona(this.bombermanHra, 1430, 900, this.batch));
+        this.ikony.add(new ZvukIkona(this.bombermanHra, 1530, 900, this.batch));
 
 
 
@@ -82,23 +86,49 @@ public class BombermanObrazovka extends ScreenAdapter {
             this.hrac.pohyb(Smer.DOPRAVA);
 
         }
-        //TODO trieda bomba
 
-        //TODO polozenie bomby
-        //TODO vybuch bomby
-        //TODO nicenie stien
-        //TODO zabijanie nepriatelov a hraca
-        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-            this.hrac.polozBombu();
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            this.mapa.polozBombu(this.hrac);
         }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.M)) {
+            this.mapa.vybuchBomby(10,9,5);
+        }
+
+
+
+
+
+
+
+        //TODO vybuch bomby vizualne
+        //TODO zabijanie nepriatelov a hraca
+
+
 
 
         this.hrac.vykresli();
 
         this.mapa.hracZobralUpgrade(this.hrac);
-        this.mapa.hracZraneny(this.hrac);
+
+
+
+        if (this.mapa.hracZraneny(this.hrac)) {
+            this.bombermanHra.setScreen(new MenuObrazovka(this.bombermanHra));
+        }
+
+        this.mapa.kontrolaVyprsaniaCasov(this.hrac);
         this.mapa.vykresli();
 
+
+        for (IIkona iIkona : this.ikony) {
+            iIkona.vykresliSa();
+            if (Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                Vector3 vector = this.viewport.unproject(new Vector3(Gdx.input.getX(), Gdx.input.getY(), 0));
+                iIkona.skontrolujKliknutie((int)vector.x, (int)vector.y);
+            }
+
+        }
 
 
     }
